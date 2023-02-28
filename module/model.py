@@ -123,13 +123,15 @@ class Model:
         return lrs_exponent, results
     
     def train(self, X, Y, episodes = 100, lr = 0.1, minibatch = 32):
-        # Run training only on random minibatches. Doesnt use the exact gradient. Only the one computed from the minibatch
-        ix = torch.randint(0, X.shape[0], (minibatch,))
-        x_mini, y_mini = X[ix], Y[ix]
 
         history = []
 
         for _ in range(episodes):
+
+            # Run training only on random minibatches. Doesnt use the exact gradient. Only the one computed from the minibatch
+            ix = torch.randint(0, X.shape[0], (minibatch,))
+            x_mini, y_mini = X[ix], Y[ix]
+
             # Forward
             x = self.C[x_mini].view(x_mini.shape[0], self.block_size*self.emb_dim) # minibatch, block, emb -> minibatch, block * embed
             print(x.shape)
